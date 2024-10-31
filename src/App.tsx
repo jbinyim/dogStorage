@@ -5,6 +5,8 @@ import Home from "./routes/Home";
 import Login from "./routes/Login";
 import CreateAccount from "./routes/CreateAccount";
 import { auth } from "./firebase";
+import Writing from "./routes/Writing";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
       {
         path: "/createAccount",
         element: <CreateAccount />,
+      },
+      {
+        path: "/writing",
+        element: (
+          <ProtectedRoute>
+            <Writing />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

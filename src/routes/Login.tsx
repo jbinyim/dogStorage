@@ -81,10 +81,7 @@ const Login = () => {
           placeholder="비밀번호"
           required
         />
-        <Input
-          type="submit"
-          value={isLoading ? "Loading..." : "회원가입하기"}
-        />
+        <Input type="submit" value={isLoading ? "Loading..." : "로그인하기"} />
       </Form>
       <Guthub onClick={onClickGit}>
         <svg
