@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { auth, db } from "../firebase";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   height: calc(100vh - 200px);
@@ -55,6 +58,8 @@ const Writing = () => {
   const [board, setBoard] = useState("");
   const [youtbue, setYoutbue] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -80,6 +85,27 @@ const Writing = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const user = auth.currentUser;
+
+    if (!user || title === "" || date === "" || board === "") return;
+
+    try {
+      setLoading(true);
+      await addDoc(collection(db, "board"), {
+        title,
+        date,
+        board,
+        youtbue,
+        username: user.displayName || "o o",
+        userId: user.uid,
+      });
+
+      navigate("/");
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -122,7 +148,10 @@ const Writing = () => {
           id="file"
           accept="image/*"
         />
-        <Input type="submit" value={"게시글 올리기"} />
+        <Input
+          type="submit"
+          value={isLoading ? "Loading..." : "게시글 올리기"}
+        />
       </Form>
     </Wrapper>
   );
