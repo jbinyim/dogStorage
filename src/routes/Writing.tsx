@@ -57,13 +57,13 @@ const Writing = () => {
   const [date, setDate] = useState("");
   const [board, setBoard] = useState("");
   const [youtbue, setYoutbue] = useState("");
-  const [file, setFile] = useState<File | null>(null);
+  const [dog, setDog] = useState("");
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
-      target: { name, value, files },
+      target: { name, value },
     } = e;
 
     if (name === "title") {
@@ -72,10 +72,8 @@ const Writing = () => {
       setDate(value);
     } else if (name === "youtbue") {
       setYoutbue(value);
-    } else if (name === "file") {
-      if (files && files.length === 1) {
-        setFile(files[0]);
-      }
+    } else if (name === "dog") {
+      setDog(value);
     }
   };
 
@@ -87,7 +85,8 @@ const Writing = () => {
     e.preventDefault();
     const user = auth.currentUser;
 
-    if (!user || title === "" || date === "" || board === "") return;
+    if (!user || title === "" || date === "" || board === "" || dog === "")
+      return;
 
     try {
       setLoading(true);
@@ -96,6 +95,7 @@ const Writing = () => {
         date,
         board,
         youtbue,
+        dog,
         username: user.displayName || "o o",
         userId: user.uid,
       });
@@ -141,12 +141,12 @@ const Writing = () => {
           type="text"
           placeholder="유튜브 영상ID"
         />
-        <input
-          name="file"
+        <Input
+          name="dog"
           onChange={onChangeInput}
-          type="file"
-          id="file"
-          accept="image/*"
+          value={dog}
+          type="text"
+          placeholder="반려동물 이름"
         />
         <Input
           type="submit"

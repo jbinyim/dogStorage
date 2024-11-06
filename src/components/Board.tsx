@@ -4,8 +4,10 @@ import { db } from "../firebase";
 import { Unsubscribe } from "firebase/auth";
 import {
   Box,
+  BoxTop,
   Day,
-  Desc,
+  DogName,
+  Text,
   Title,
   User,
   Video,
@@ -20,6 +22,7 @@ interface IBoard {
   title: string;
   userId: string;
   username: string;
+  dog: string;
   youtbue?: string;
 }
 
@@ -37,7 +40,8 @@ const Board = () => {
 
       unsubscribe = await onSnapshot(boardQuery, (spanshop) => {
         const boards = spanshop.docs.map((item) => {
-          const { board, date, title, userId, username, youtbue } = item.data();
+          const { board, date, title, userId, username, youtbue, dog } =
+            item.data();
           return {
             board,
             date,
@@ -45,6 +49,7 @@ const Board = () => {
             userId,
             username,
             youtbue,
+            dog,
             id: item.id,
           };
         });
@@ -62,10 +67,22 @@ const Board = () => {
       <Box>
         {board.map((docs) => (
           <Write>
-            <Title>{docs.title}</Title>
-            <Day>{docs.date}</Day>
-            <Desc>{docs.board}</Desc>
-            <Video>{docs.youtbue}</Video>
+            <BoxTop>
+              <Day>{docs.date}</Day>
+              <Title>{docs.title}</Title>
+              <Text>{docs.board}</Text>
+              <div>
+                <DogName>{docs.dog}</DogName>
+              </div>
+              {docs.youtbue ? (
+                <Video
+                  src="https://cdn.iconscout.com/icon/free/png-256/free-youtube-104-432560.png?f=webp"
+                  alt="유튜브 로고"
+                />
+              ) : (
+                ""
+              )}
+            </BoxTop>
             <User>{docs.username}</User>
           </Write>
         ))}

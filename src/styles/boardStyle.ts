@@ -15,17 +15,51 @@ export const Box = styled.div`
 export const Write = styled.div`
   width: 300px;
   height: 340px;
-  border: 1px solid #000;
+  border: 1px solid #9999;
   border-radius: 30px;
-  padding: 20px 25px 0;
+  padding: 30px 35px 0;
 `;
 
-export const Title = styled.h2``;
+export const BoxTop = styled.div`
+  height: 230px;
+`;
 
-export const Desc = styled.p``;
+export const Day = styled.p`
+  font-size: 14px;
+  color: #999;
+`;
 
-export const Video = styled.div``;
+export const Title = styled.h2`
+  font-size: 18px;
+  margin: 20px 0 25px;
+`;
 
-export const Day = styled.p``;
+export const Text = styled.p`
+  font-size: 16px;
+  margin-bottom: 20px;
+  height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
 
-export const User = styled.p``;
+export const DogName = styled.span`
+  font-size: 13px;
+  color: #3e86f5;
+  background: #f2f4f8;
+  padding: 3px 10px;
+  border-radius: 15px;
+`;
+
+export const Video = styled.img`
+  width: 40px;
+  margin-top: 15px;
+`;
+
+export const User = styled.p`
+  margin-top: 10px;
+  padding-top: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  border-top: 1px solid #9999;
+`;
