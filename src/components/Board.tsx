@@ -2,6 +2,10 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { Unsubscribe } from "firebase/auth";
+import { boardInfoState } from "../atom";
+import { useRecoilState } from "recoil";
+import { IBoard } from "../atom";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   BoxTop,
@@ -15,19 +19,10 @@ import {
   Write,
 } from "../styles/boardStyle";
 
-interface IBoard {
-  id: string;
-  board: string;
-  date: string;
-  title: string;
-  userId: string;
-  username: string;
-  dog: string;
-  youtbue?: string;
-}
-
 const Board = () => {
   const [board, setBoard] = useState<IBoard[]>([]);
+  const [boardInfo, setBoardInfo] = useRecoilState(boardInfoState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let unsubscribe: Unsubscribe | null = null;
@@ -62,11 +57,16 @@ const Board = () => {
     };
   }, []);
 
+  const onClick = (docs: IBoard) => {
+    setBoardInfo(docs);
+    navigate(`/story/${docs.id}`);
+  };
+
   return (
     <Wrapper>
       <Box>
         {board.map((docs) => (
-          <Write>
+          <Write key={docs.id} onClick={() => onClick(docs)}>
             <BoxTop>
               <Day>{docs.date}</Day>
               <Title>{docs.title}</Title>
